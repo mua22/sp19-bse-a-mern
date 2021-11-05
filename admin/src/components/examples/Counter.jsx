@@ -1,22 +1,23 @@
 import React from "react";
-const Counter = () => {
-  const [count, setCount] = React.useState(5);
-  const countUp = () => {
-    setCount(count + 1);
-    // count = count + 1;
-    // alert("count valus is " + count);
-  };
-  const countDown = () => {
-    setCount(count - 1);
-    // count = count - 1;
-    // alert("count valus is " + count);
-  };
+const Counter = (props) => {
+  console.log(props);
+
   return (
     <div>
-      <h5>Counter</h5>
-      <button onClick={countDown}>-</button>
-      {count} <button onClick={countUp}>+</button>
-      current count value is {count}
+      <h5
+        style={{
+          color: props.color,
+          border: "2px dashed",
+          borderColor: props.count < 5 ? "red" : "green",
+        }}
+      >
+        Counter
+      </h5>
+      <button onClick={props.countDown}>-</button>
+      {props.count} <button onClick={props.countUp}>+</button>
+      <br />
+      current count value is {props.count}
+      {props.count < 5 && <div>Count is in dangerous position</div>}
     </div>
   );
 };
