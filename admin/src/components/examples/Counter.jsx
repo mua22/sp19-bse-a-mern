@@ -1,4 +1,6 @@
 import React from "react";
+import FancyBorder from "./FancyBorder";
+import Welcome from "./Welcome";
 const Counter = (props) => {
   console.log(props);
 
@@ -11,6 +13,9 @@ const Counter = (props) => {
           borderColor: props.count < 5 ? "red" : "green",
         }}
       >
+        <FancyBorder color="blue">
+          <Welcome name="Sara" />
+        </FancyBorder>
         Counter
       </h5>
       <button onClick={props.countDown}>-</button>
