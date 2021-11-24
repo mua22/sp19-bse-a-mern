@@ -1,9 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 const SingleProduct = (props) => {
   let product = props.product;
   return (
     <div>
-      <h4>{product.name}</h4>
+      <h4>
+        <Link to={"/products/details/" + product._id}>{product.name}</Link>{" "}
+      </h4>
       <p>
         <b>Price: </b>
         {product.price}
