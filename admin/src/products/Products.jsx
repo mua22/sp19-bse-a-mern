@@ -1,6 +1,7 @@
 import React from "react";
 import SingleProduct from "./SingleProduct";
 import axios from "axios";
+import { Link } from "react-router-dom";
 const Products = () => {
   const [products, setProducts] = React.useState([]);
   const [hasError, setHasError] = React.useState(false);
@@ -23,6 +24,7 @@ const Products = () => {
   return (
     <div>
       <h3>Products</h3>
+      <Link to="/products/create">Add New Product</Link>
       {products.length == 0 && !hasError && <p>Loading ...</p>}
       {hasError && <p>Something Wrong Happened. We are looking into it</p>}
       {products.map((p) => (

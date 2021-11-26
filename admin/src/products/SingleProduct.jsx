@@ -7,6 +7,7 @@ const SingleProduct = (props) => {
       <h4>
         <Link to={"/products/details/" + product._id}>{product.name}</Link>{" "}
       </h4>
+      <Link to={"/products/edit/" + product._id}>Edit</Link>
       <p>
         <b>Price: </b>
         {product.price}
