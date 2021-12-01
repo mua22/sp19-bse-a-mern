@@ -9,8 +9,7 @@ const Products = () => {
   //   React.useEffect(() => console.log("Only First Render"), []);
   //   React.useEffect(() => console.log("First Render And Products"), [products]);
   //   React.useEffect(() => console.log("This will be called on each render"));
-  React.useEffect(function () {
-    // console.log("Sending Ajax call");
+  const getData = () => {
     axios
       .get("https://usman-recipes.herokuapp.com/api/products")
       .then((res) => {
@@ -20,6 +19,10 @@ const Products = () => {
         console.log(err);
         setHasError(true);
       });
+  };
+  React.useEffect(function () {
+    // console.log("Sending Ajax call");
+    getData();
   }, []);
   return (
     <div>
@@ -28,7 +31,7 @@ const Products = () => {
       {products.length == 0 && !hasError && <p>Loading ...</p>}
       {hasError && <p>Something Wrong Happened. We are looking into it</p>}
       {products.map((p) => (
-        <SingleProduct product={p} />
+        <SingleProduct product={p} onDelete={getData} />
       ))}
     </div>
   );
