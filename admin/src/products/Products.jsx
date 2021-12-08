@@ -11,7 +11,7 @@ const Products = () => {
   //   React.useEffect(() => console.log("This will be called on each render"));
   const getData = () => {
     axios
-      .get("https://usman-recipes.herokuapp.com/api/products")
+      .get("/api/products")
       .then((res) => {
         setProducts(res.data);
       })

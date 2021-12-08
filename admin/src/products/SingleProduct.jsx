@@ -11,14 +11,10 @@ const SingleProduct = (props) => {
       <Link to={"/products/edit/" + product._id}>Edit</Link>
       <button
         onClick={() => {
-          axios
-            .delete(
-              "https://usman-recipes.herokuapp.com/api/products/" + product._id
-            )
-            .then((res) => {
-              console.log("Deleted");
-              props.onDelete();
-            });
+          axios.delete("/api/products/" + product._id).then((res) => {
+            console.log("Deleted");
+            props.onDelete();
+          });
         }}
       >
         Delete

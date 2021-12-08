@@ -8,7 +8,7 @@ const ProductDetails = (props) => {
   console.log(params);
   React.useEffect(function () {
     axios
-      .get("https://usman-recipes.herokuapp.com/api/products/" + params.id)
+      .get("/api/products/" + params.id)
       .then((res) => {
         setProduct(res.data);
       })

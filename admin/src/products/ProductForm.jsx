@@ -10,7 +10,7 @@ const ProductForm = () => {
   React.useEffect(function () {
     if (isEditing)
       axios
-        .get("https://usman-recipes.herokuapp.com/api/products/" + params.id)
+        .get("/api/products/" + params.id)
         .then((res) => {
           setProduct(res.data);
         })
@@ -35,24 +35,17 @@ const ProductForm = () => {
         onClick={(e) => {
           setSending(true);
           if (isEditing)
-            axios
-              .put(
-                "https://usman-recipes.herokuapp.com/api/products/" + params.id,
-                product
-              )
-              .then((res) => {
-                //   console.log(res.data);
-                setSending(false);
-                navigate("/");
-              });
+            axios.put("/api/products/" + params.id, product).then((res) => {
+              //   console.log(res.data);
+              setSending(false);
+              navigate("/");
+            });
           else
-            axios
-              .post("https://usman-recipes.herokuapp.com/api/products", product)
-              .then((res) => {
-                //   console.log(res.data);
-                setSending(false);
-                navigate("/");
-              });
+            axios.post("/api/products", product).then((res) => {
+              //   console.log(res.data);
+              setSending(false);
+              navigate("/");
+            });
         }}
       >
         {isEditing ? "Edit Product" : "Add Product"}
