@@ -26,6 +26,10 @@ router.post("/login", async function (req, res, next) {
 router.get("/register", function (req, res, next) {
   return res.render("site/register");
 });
+router.get("/logout", async (req, res) => {
+  req.session.user = null;
+  return res.redirect("/login");
+});
 router.post("/register", async function (req, res, next) {
   let user = await User.findOne({ email: req.body.email });
   if (user) {

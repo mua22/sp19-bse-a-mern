@@ -26,8 +26,12 @@ router.put("/:id", async function (req, res, next) {
   return res.send(product);
 });
 router.delete("/:id", async function (req, res, next) {
-  let product = await Product.findById(req.params.id);
-  await product.delete();
-  return res.send("deleted");
+  try {
+    let product = await Product.findById(req.params.id);
+    await product.delete();
+    return res.send("deleted");
+  } catch (err) {
+    return res.status(400).send("Invalid Id");
+  }
 });
 module.exports = router;

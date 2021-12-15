@@ -11,9 +11,10 @@ var checkSessionAuth = require("./middlewares/checkSessionAuth");
 var apiauth = require("./middlewares/apiauth");
 var session = require("express-session");
 var app = express();
+var config = require("config");
 app.use(
   session({
-    secret: "my secret",
+    secret: config.get("sessionSecret"),
     cookie: { maxAge: 60000 },
     resave: true,
     saveUninitialized: true,
@@ -28,7 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/api/products", apiauth, require("./routes/api/products"));
+app.use("/api/products", require("./routes/api/products"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/", sessionAuth, indexRouter);
 app.use("/", sessionAuth, checkSessionAuth, protectedRouter);

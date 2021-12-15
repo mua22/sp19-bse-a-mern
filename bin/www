@@ -7,12 +7,12 @@
 var app = require("../app");
 var debug = require("debug")("sp19-bse-a-mern:server");
 var http = require("http");
-
+var config = require("config");
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || "4000");
+var port = normalizePort(process.env.PORT || config.get("port"));
 app.set("port", port);
 
 /**
@@ -86,7 +86,8 @@ function onListening() {
 }
 
 const mongoose = require("mongoose");
+const connectionString = config.get("db");
 mongoose
-  .connect("mongodb://localhost/sp19_bse_a", { useNewUrlParser: true })
-  .then(() => console.log("Connected to Mongo...."))
+  .connect(connectionString, { useNewUrlParser: true })
+  .then(() => console.log("Connected to " + connectionString))
   .catch((error) => console.log(error.message));

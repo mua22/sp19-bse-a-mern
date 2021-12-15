@@ -1,3 +1,6 @@
 {
-  "jwtPrivateKey": "usmanPrivateKey"
+  "jwtPrivateKey": "usmanPrivateKey",
+  "db": "mongodb://localhost/sp19_bse_a",
+  "port": "4000",
+  "sessionSecret": "MySessionSecret"
 }
