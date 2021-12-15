@@ -5,15 +5,18 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var expressLayouts = require("express-ejs-layouts");
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+var protectedRouter = require("./routes/protected");
+var sessionAuth = require("./middlewares/sessionAuth");
+var checkSessionAuth = require("./middlewares/checkSessionAuth");
+var apiauth = require("./middlewares/apiauth");
 var session = require("express-session");
 var app = express();
 app.use(
   session({
-    secret: "keyboard cat",
-    resave: false,
+    secret: "my secret",
+    cookie: { maxAge: 60000 },
+    resave: true,
     saveUninitialized: true,
-    cookie: { secure: true },
   })
 );
 // view engine setup
@@ -25,10 +28,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use("/api/products", require("./routes/api/products"));
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/api/products", apiauth, require("./routes/api/products"));
+app.use("/api/auth", require("./routes/api/auth"));
+app.use("/", sessionAuth, indexRouter);
+app.use("/", sessionAuth, checkSessionAuth, protectedRouter);
+app.get("/admin", async (req, res) => {
+  res.sendFile(path.join(__dirname, "admin", "build", "index.html"));
+});
+app.get("/admin/*", async (req, res) => {
+  res.sendFile(path.join(__dirname, "admin", "build", "index.html"));
+});
+app.use(express.static(path.join(__dirname, "admin", "build")));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

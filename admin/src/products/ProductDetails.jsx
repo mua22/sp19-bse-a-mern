@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
 import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 const ProductDetails = (props) => {
   const [product, setProduct] = React.useState({});
   const params = useParams();
   console.log(params);
   React.useEffect(function () {
-    axios
+    axiosInstance
       .get("/api/products/" + params.id)
       .then((res) => {
         setProduct(res.data);

@@ -9,17 +9,36 @@ import ProductForm from "./products/ProductForm";
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router basename={"/admin"}>
         <ul id="menu">
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
+          {localStorage.getItem("jwt_access_token") ? (
+            <>
+              <li>
+                <a
+                  href=""
+                  onClick={(e) => {
+                    e.preventDefault();
+                    localStorage.removeItem("jwt_access_token");
+                    window.location.reload();
+                  }}
+                >
+                  Logout
+                </a>
+              </li>{" "}
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+            </>
+          )}
         </ul>
         <Routes>
           <Route path="/login" element={<Login />} />

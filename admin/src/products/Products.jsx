@@ -2,6 +2,8 @@ import React from "react";
 import SingleProduct from "./SingleProduct";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import axiosInstance from "../services/axiosInstance";
+import AuthCheck from "../components/views/auth/AuthCheck";
 const Products = () => {
   const [products, setProducts] = React.useState([]);
   const [hasError, setHasError] = React.useState(false);
@@ -10,7 +12,7 @@ const Products = () => {
   //   React.useEffect(() => console.log("First Render And Products"), [products]);
   //   React.useEffect(() => console.log("This will be called on each render"));
   const getData = () => {
-    axios
+    axiosInstance
       .get("/api/products")
       .then((res) => {
         setProducts(res.data);
@@ -25,15 +27,17 @@ const Products = () => {
     getData();
   }, []);
   return (
-    <div>
-      <h3>Products</h3>
-      <Link to="/products/create">Add New Product</Link>
-      {products.length == 0 && !hasError && <p>Loading ...</p>}
-      {hasError && <p>Something Wrong Happened. We are looking into it</p>}
-      {products.map((p) => (
-        <SingleProduct product={p} onDelete={getData} />
-      ))}
-    </div>
+    <AuthCheck>
+      <div>
+        <h3>Products</h3>
+        <Link to="/products/create">Add New Product</Link>
+        {products.length == 0 && !hasError && <p>Loading ...</p>}
+        {hasError && <p>Something Wrong Happened. We are looking into it</p>}
+        {products.map((p) => (
+          <SingleProduct product={p} onDelete={getData} />
+        ))}
+      </div>
+    </AuthCheck>
   );
 };
 

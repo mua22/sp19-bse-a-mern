@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 const SingleProduct = (props) => {
   let product = props.product;
   return (
@@ -11,7 +12,7 @@ const SingleProduct = (props) => {
       <Link to={"/products/edit/" + product._id}>Edit</Link>
       <button
         onClick={() => {
-          axios.delete("/api/products/" + product._id).then((res) => {
+          axiosInstance.delete("/api/products/" + product._id).then((res) => {
             console.log("Deleted");
             props.onDelete();
           });

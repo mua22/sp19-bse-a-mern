@@ -2,6 +2,7 @@ import { Button, TextField } from "@mui/material";
 import React from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
+import axiosInstance from "../services/axiosInstance";
 const ProductForm = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -9,7 +10,7 @@ const ProductForm = () => {
   const isEditing = id ? true : false;
   React.useEffect(function () {
     if (isEditing)
-      axios
+      axiosInstance
         .get("/api/products/" + params.id)
         .then((res) => {
           setProduct(res.data);
@@ -35,13 +36,15 @@ const ProductForm = () => {
         onClick={(e) => {
           setSending(true);
           if (isEditing)
-            axios.put("/api/products/" + params.id, product).then((res) => {
-              //   console.log(res.data);
-              setSending(false);
-              navigate("/");
-            });
+            axiosInstance
+              .put("/api/products/" + params.id, product)
+              .then((res) => {
+                //   console.log(res.data);
+                setSending(false);
+                navigate("/");
+              });
           else
-            axios.post("/api/products", product).then((res) => {
+            axiosInstance.post("/api/products", product).then((res) => {
               //   console.log(res.data);
               setSending(false);
               navigate("/");
